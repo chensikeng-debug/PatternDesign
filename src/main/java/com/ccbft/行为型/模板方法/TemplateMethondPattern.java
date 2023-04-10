@@ -25,12 +25,12 @@ package com.ccbft.行为型.模板方法;
  */
 public class TemplateMethondPattern {
     public static void main(String[] args) {
-        // 煮食物
-        CookingFood cookingFood = new CookingFood();
-        cookingFood.cook();
+        // 煮糯米
+        CookingRice cookingFood = new CookingRice();
+        cookingFood.cook(); //调用继承自父类的cook方法
         // 煮面食
         CookingNoodles cookingNoodles = new CookingNoodles();
-        cookingNoodles.cook();
+        cookingNoodles.cook(); //调用继承自父类的cook方法
     }
 }
 
@@ -50,16 +50,16 @@ abstract class Cooking {
     }
 }
 
-class CookingFood extends Cooking {
+class CookingRice extends Cooking {
 
     @Override
     protected void step1() {
-        System.out.println("放鸡蛋和西红柿");
+        System.out.println("放米");
     }
 
     @Override
     protected void step2() {
-        System.out.println("少放盐和味精");
+        System.out.println("放酒");
     }
 }
 
