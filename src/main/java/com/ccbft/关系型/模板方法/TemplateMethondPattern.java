@@ -1,4 +1,4 @@
-package com.ccbft.模板方法;
+package com.ccbft.关系型.模板方法;
 
 /**
  * 模板方法

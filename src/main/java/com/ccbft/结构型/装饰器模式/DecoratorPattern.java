@@ -1,4 +1,4 @@
-package com.ccbft.装饰器模式;
+package com.ccbft.结构型.装饰器模式;
 
 /**
  * 装饰第一代机器人

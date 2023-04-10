@@ -1,4 +1,4 @@
-package com.ccbft.门面模式;
+package com.ccbft.结构型.门面模式;
 
 /**
  * Facade是门面，SubSystem是子系统

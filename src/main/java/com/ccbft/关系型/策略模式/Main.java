@@ -1,7 +1,7 @@
-package com.ccbft.策略模式;
+package com.ccbft.关系型.策略模式;
 
-import com.ccbft.策略模式.factory.PersonStrategyFactory;
-import com.ccbft.策略模式.strategy.PersonStrategy;
+import com.ccbft.关系型.策略模式.factory.PersonStrategyFactory;
+import com.ccbft.关系型.策略模式.strategy.PersonStrategy;
 
 /**
  * 策略选择器是传入一个Enum类，然后根据传入Enum的不同，选择了不同的继承类。从而实现了if else。优雅的过渡。
