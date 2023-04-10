@@ -1,6 +1,6 @@
-package com.ccbft.关系型.策略模式;
+package com.ccbft.行为型.策略模式;
 
-import com.ccbft.关系型.策略模式.model.Person;
+import com.ccbft.行为型.策略模式.model.Person;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.ccbft.关系型.策略模式.strategy;
+package com.ccbft.行为型.策略模式.strategy;
 
 /**
  * @author Administrator

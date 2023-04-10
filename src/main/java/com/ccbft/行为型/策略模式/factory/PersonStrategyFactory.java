@@ -1,10 +1,10 @@
-package com.ccbft.关系型.策略模式.factory;
+package com.ccbft.行为型.策略模式.factory;
 
-import com.ccbft.关系型.策略模式.model.SexEnum;
-import com.ccbft.关系型.策略模式.strategy.FemalePersonStrategy;
-import com.ccbft.关系型.策略模式.strategy.MalePersonStrategy;
-import com.ccbft.关系型.策略模式.strategy.PersonStrategy;
-import com.ccbft.关系型.策略模式.strategy.UnknowPersonStrategy;
+import com.ccbft.行为型.策略模式.model.SexEnum;
+import com.ccbft.行为型.策略模式.strategy.FemalePersonStrategy;
+import com.ccbft.行为型.策略模式.strategy.MalePersonStrategy;
+import com.ccbft.行为型.策略模式.strategy.PersonStrategy;
+import com.ccbft.行为型.策略模式.strategy.UnknowPersonStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
