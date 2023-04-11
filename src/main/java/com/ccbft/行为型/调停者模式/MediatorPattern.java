@@ -1,137 +1,144 @@
 package com.ccbft.行为型.调停者模式;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * 四个MM打麻将，相互之间谁应该给谁多少钱算不清楚了，幸亏当时我在旁边，
- * 按照各自的筹码数算钱，赚了钱的从我这里拿，赔了钱的也付给我，一切就OK啦，俺得到了四个MM的电话。
+ * 实现了一个简单的麻将游戏，四个玩家之间的结算问题通过调停者模式得到解决。当玩家之间输赢不清楚时，
+ * 他们通过调停者向调停者报告自己赢得或输掉的筹码数，由调停者来计算每个玩家最终应该赢得或输掉的筹码数，并进行结算。
+ * 这样，每个玩家就不需要互相之间进行计算，而是将结算问题交给了调停者处理，从而简化了程序的逻辑，提高了程序的可维护性和扩展性。
  */
-public class MediatorPattern {
-    public static void main(String[] args) {
-        // 创建四个账户
-        Account a = new Account("A", 100);
-        Account b = new Account("B", -20);
-        Account c = new Account("C", -30);
-        Account d = new Account("D", -50);
-
-        // 创建调停者对象并注册四个账户
-        Mediator mediator = new MahjongMediator(Arrays.asList(a, b, c, d));
-        a.setMediator(mediator);
-        b.setMediator(mediator);
-        c.setMediator(mediator);
-        d.setMediator(mediator);
-
-        // A向B转账20元
-        a.transfer(b, 20);
-
-        // A向C转账30元
-        a.transfer(c, 30);
-
-        // D向A转账50元
-        d.transfer(a, 50);
-    }
-}
-
-// 抽象调停者
-interface Mediator {
-    void settle(Account sender, Account receiver, int amount);
-}
-
-// 具体调停者
-class MahjongMediator implements Mediator {
-    private List<Account> accounts;
-
-    public MahjongMediator(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public void settle(Account sender, Account receiver, int amount) {
-        // 计算赚钱的总数和欠钱的总数
-        int totalProfit = 0;
-        int totalDebt = 0;
-        for (Account account : accounts) {
-            if (account.getBalance() > 0) {
-                totalProfit += account.getBalance();
-            } else if (account.getBalance() < 0) {
-                totalDebt -= account.getBalance();
-            }
-        }
-
-        // 如果赚钱的总数等于欠钱的总数，则结算完毕
-        if (totalProfit == totalDebt) {
-            for (Account account : accounts) {
-                if (account.getBalance() > 0) {
-                    account.settle(-account.getBalance());
-                } else if (account.getBalance() < 0) {
-                    account.settle(account.getBalance());
-                }
-            }
-        }
-
-        // 否则按比例结算
-        else {
-            int totalAmount = Math.min(totalProfit, totalDebt);
-            for (Account account : accounts) {
-                if (account == sender) {
-                    account.addBalance(-amount);
-                } else if (account == receiver) {
-                    account.addBalance(amount);
-                }
-
-                if (account.getBalance() > 0) {
-                    int profit = account.getBalance() * totalAmount / totalProfit;
-                    account.settle(-profit);
-                } else if (account.getBalance() < 0) {
-                    int debt = account.getBalance() * totalAmount / totalDebt;
-                    account.settle(debt);
-                }
-            }
-        }
-    }
-}
-
-// 抽象同事类
-interface Colleague {
-    void setMediator(Mediator mediator);
-
-    void addBalance(int amount);
-
-    void settle(int amount);
-}
-
-// 具体同事类
-class Account implements Colleague {
+// 定义玩家类
+class Player {
     private String name;
-    private int balance;
-    private Mediator mediator;
+    private int chips;
 
-    public Account(String name, int balance) {
+    public Player(String name, int chips) {
         this.name = name;
-        this.balance = balance;
-    }
-
-    public void setMediator(Mediator mediator) {
-        this.mediator = mediator;
-    }
-
-    public void addBalance(int amount) {
-        balance += amount;
-    }
-
-    public void settle(int amount) {
-        System.out.println(name + "结算了" + amount + "元");
-    }
-
-    public void transfer(Account receiver, int amount) {
-        mediator.settle(this, receiver, amount);
+        this.chips = chips;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getBalance() {
-        return balance;
+    public int getChips() {
+        return chips;
+    }
+
+    public void setChips(int chips) {
+        this.chips = chips;
+    }
+
+    // 玩家从调停者处收到赢得的筹码
+    public void receiveChips(int amount) {
+        this.chips += amount;
+    }
+
+    // 玩家向调停者处支付输掉的筹码
+    public void payChips(int amount) {
+        this.chips -= amount;
+    }
+}
+
+// 定义调停者类
+class Mediator {
+    private Map<Player, Integer> winMap = new HashMap<>();
+    private Map<Player, Integer> loseMap = new HashMap<>();
+
+    // 添加胜利的玩家和筹码数
+    public void addWin(Player player, int amount) {
+        winMap.put(player, amount);
+    }
+
+    // 添加失败的玩家和筹码数
+    public void addLose(Player player, int amount) {
+        loseMap.put(player, amount);
+    }
+
+    // 结算筹码
+    public void settle() {
+        for (Player winner : winMap.keySet()) {
+            int amount = winMap.get(winner);
+            for (Player loser : loseMap.keySet()) {
+                if (!winner.equals(loser)) {
+                    amount -= loseMap.get(loser);
+                }
+            }
+            winner.receiveChips(amount);
+        }
+        winMap.clear();
+        loseMap.clear();
+    }
+}
+
+// 定义麻将游戏类
+class MahjongGame {
+    private Mediator mediator;
+    private List<Player> players;
+
+    public MahjongGame() {
+        this.mediator = new Mediator();
+        this.players = new ArrayList<>();
+    }
+
+    // 添加玩家
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+    // 玩家之间进行交互
+    public void play() {
+        // ... 进行麻将游戏 ...
+
+        // 结算筹码
+        for (Player winner : players) {
+            int totalWin = 0;
+            for (Player loser : players) {
+                if (!winner.equals(loser)) {
+                    // 计算赢得的筹码数
+                    int chips = calculateChips(winner, loser);
+                    totalWin += chips;
+                    mediator.addLose(loser, chips);
+                }
+            }
+            mediator.addWin(winner, totalWin);
+        }
+        mediator.settle();
+    }
+
+    // 计算玩家之间输赢的筹码数
+    private int calculateChips(Player winner, Player loser) {
+        // ... 根据规则计算筹码数 ...
+        return 10;
+    }
+}
+
+// 使用示例
+public class MediatorPattern {
+    public static void main(String[] args) {
+        // 创建四个玩家，每个玩家初始有100个筹码
+        Player a = new Player("A", 100);
+        Player b = new Player("B", 100);
+        Player c = new Player("C", 100);
+        Player d = new Player("D", 100);
+
+        // 创建麻将游戏并添加玩家
+        MahjongGame game = new MahjongGame();
+        game.addPlayer(a);
+        game.addPlayer(b);
+        game.addPlayer(c);
+        game.addPlayer(d);
+
+        // 进行游戏
+        game.play();
+
+        // 打印每个玩家的筹码数
+        System.out.println("玩家A的筹码数：" + a.getChips());
+        System.out.println("玩家B的筹码数：" + b.getChips());
+        System.out.println("玩家C的筹码数：" + c.getChips());
+        System.out.println("玩家D的筹码数：" + d.getChips());
     }
 }
