@@ -2,6 +2,13 @@ package com.ccbft.行为型.命令模式.实战;
 
 import java.util.Stack;
 
+/**
+ * 实战代码，
+ * 将每个操作封装成一个命令对象，并将它们添加到历史记录列表中，来支持撤销和重做操作。
+ * 在执行每个命令时，会自动保存当前状态，以便在需要撤销时恢复。
+ * 我们还可以通过循环遍历历史记录列表，执行每个命令对象的undo()方法，实现撤销操作。
+ */
+
 public class UndoRedo {
     public static void main(String[] args) {
         // 创建接收者对象
@@ -19,22 +26,23 @@ public class UndoRedo {
         history.push(command2);
 
         // 执行操作
-        while(!history.isEmpty()) {
+        while (!history.isEmpty()) {
             Command command = history.pop();
             command.execute();
         }
 
         // 撤销操作
-//        while(!history.isEmpty()) {
-//            Command command = history.pop();
-//            command.undo();
-//        }
+        while (!history.isEmpty()) {
+            Command command = history.pop();
+            command.undo();
+        }
     }
 }
 
 // 定义命令接口
 interface Command {
     void execute();
+
     void undo();
 }
 
