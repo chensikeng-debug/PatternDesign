@@ -2,7 +2,7 @@ package com.ccbft.结构型.装饰器模式;
 
 /**
  * 装饰第一代机器人
- *
+ * <p>
  * 功能增强
  */
 public class DecoratorPattern {
@@ -12,7 +12,7 @@ public class DecoratorPattern {
     }
 }
 
-interface Robot{
+interface Robot {
     void doSomething();
 }
 
