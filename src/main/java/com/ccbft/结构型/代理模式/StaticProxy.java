@@ -1,36 +1,49 @@
 package com.ccbft.结构型.代理模式;
 //代理模式[控制对对象的访问]，通常是因为原始对象无法满足某些特定要求或安全限制。
+//优点：可以做到在符合开闭原则的情况下对目标对象进行功能扩展。
+
 public class StaticProxy {
     public static void main(String[] args) {
-        BuyHouse buyHouseProxy = new BuyHouseProxy(new BuyHouseImpl());
-        buyHouseProxy.buyHouse();
+        Website proxyWebsite1 = new ProxyWebsite("www.jd.com");
+        proxyWebsite1.access();
     }
 }
 
-// 创建服务类接口
-interface BuyHouse {
-    void buyHouse();
+interface Website {
+    void access();
 }
 
-// 实现服务接口
-class BuyHouseImpl implements BuyHouse {
+class RealWebsite implements Website {
+    private String url;
+
+    public RealWebsite(String url) {
+        this.url = url;
+        load();
+    }
+
     @Override
-    public void buyHouse() {
-        System.out.println("我要买房");
+    public void access() {
+        System.out.println("Accessing real website " + url);
+    }
+
+    private void load() {
+        System.out.println("Loading real website " + url);
     }
 }
 
-// 创建代理类
-class BuyHouseProxy implements BuyHouse {
-    // 持有的原始对象
-    private BuyHouse buyHouse;
-    public BuyHouseProxy(final BuyHouse buyHouse) {
-        this.buyHouse = buyHouse;
+class ProxyWebsite implements Website {
+    private RealWebsite website;
+    private String url;
+
+    public ProxyWebsite(String url) {
+        this.url = url;
     }
+
     @Override
-    public void buyHouse() {
-        System.out.println("买房前准备");
-        buyHouse.buyHouse();
-        System.out.println("买房后装修");
+    public void access() {
+        if (website == null) {
+            website = new RealWebsite(url);
+        }
+        website.access();
     }
 }
