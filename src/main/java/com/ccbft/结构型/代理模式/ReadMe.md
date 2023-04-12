@@ -1,5 +1,6 @@
     代理模式给某一个对象提供一个代理对象，并由代理对象控制对源对象的引用
-    
+![img_1.png](img_1.png)
+
     [静态代理]
 ![img.png](img.png)
     
@@ -19,8 +20,24 @@
 
     
     [动态代理]
+    1.代理对象,不需要实现接口
 
+    2.代理对象的生成,是利用JDK的API,动态的在内存中构建代理对象(需要我们指定创建代理对象/目标对象实现的接口的类型)
+    代理类不用再实现接口了。但是，要求被代理对象必须有接口
+
+    动态代理实现：
+
+    Java.lang.reflect.Proxy类可以直接生成一个代理对象
     
+    Proxy.newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)生成一个代理对象
+
+    参数1:ClassLoader loader 代理对象的类加载器 一般使用被代理对象的类加载器
+
+    参数2:Class<?>[] interfaces 代理对象的要实现的接口
+    一般使用的被代理对象实现的接口参数3:InvocationHandler h (接口)执行处理类
+    InvocationHandler中的invoke(Object proxy, Method method, Object[] args)方法：调用代理类的任何方法，此方法都会执行
+
+    参数3.1:代理对象(慎用)参数3.2:当前执行的方法参数3.3:当前执行的方法运行时传递过来的参数
     CGLIB代理
 
 
