@@ -25,7 +25,7 @@ class BuyHouseImpl implements BuyHouse {
 }
 
 /**
- * 动态代理类，可以实现人力类型的代理
+ * 动态代理类，可以实现所有类型的代理
  */
 class DynamicProxyHandler implements InvocationHandler {
 
@@ -38,9 +38,9 @@ class DynamicProxyHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("买房前准备");
-        Object result = method.invoke(object, args);
-        System.out.println("买房后装修");
+        System.out.println("买房前准备"); // preJob
+        Object result = method.invoke(object, args); // doJob
+        System.out.println("买房后装修"); // postJob
         return result;
     }
 }
