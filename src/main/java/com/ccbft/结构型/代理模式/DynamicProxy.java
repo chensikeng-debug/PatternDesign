@@ -24,7 +24,11 @@ class BuyHouseImpl implements BuyHouse {
     }
 }
 
+/**
+ * 动态代理类，可以实现人力类型的代理
+ */
 class DynamicProxyHandler implements InvocationHandler {
+
     //  object可以是任意类型，且不需要和目标对象实现同一接口，什么类我都能代理。
     private Object object;
 
