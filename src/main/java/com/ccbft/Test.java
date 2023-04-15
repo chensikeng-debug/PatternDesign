@@ -51,14 +51,19 @@ public class Test {
 //        System.out.println(split.length);
         // 3是正确的分割结果
 
-        String line = "ck,aa,dd";
-        String s = ",".replaceAll("\\|", "\\\\|");
-        System.out.println(s);
-        String[] split = line.split(s, -1);
-        System.out.println(split.length);
-        for (String s1 : split) {
-            System.out.println(s1);
-        }
+//        String line = "ck,aa,dd";
+//        String s = ",".replaceAll("\\|", "\\\\|");
+//        System.out.println(s);
+//        String[] split = line.split(s, -1);
+//        System.out.println(split.length);
+//        for (
+//        String s1 : split) {
+//            System.out.println(s1);
+//        }
+
+        String s = null;
+        boolean blank = StringUtils.isBlank(s);
+        System.out.println(blank);
     }
 }
 /**
