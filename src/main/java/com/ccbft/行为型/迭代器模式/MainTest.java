@@ -15,15 +15,46 @@ package com.ccbft.行为型.迭代器模式;
  */
 public class MainTest {
     public static void main(String[] args) {
-        CourseAggregateImpl courseAggregate = new CourseAggregateImpl();
-        courseAggregate.add(new Course("1-Course"));
-        courseAggregate.add(new Course("2-Course"));
-        courseAggregate.add(new Course("3-Course"));
-        courseAggregate.add(new Course("4-Course"));
-        CourseIterator courseIterator = courseAggregate.getCourseIterator();
-        while (courseIterator.hasCourse()) {
-            Course course = courseIterator.nextCourse();
-            System.out.println(course);
-        }
+//        CourseAggregateImpl courseAggregate = new CourseAggregateImpl();
+//        courseAggregate.add(new Course("1-Course"));
+//        courseAggregate.add(new Course("2-Course"));
+//        courseAggregate.add(new Course("3-Course"));
+//        courseAggregate.add(new Course("4-Course"));
+//        CourseIterator courseIterator = courseAggregate.getCourseIterator();
+//        while (courseIterator.hasCourse()) {
+//            Course course = courseIterator.nextCourse();
+//            System.out.println(course);
+//        }
+
+        Mythread mythread1 = new Mythread();
+        mythread1.start();
+
+        Mythread mythread2 = new Mythread();
+
+        Thread thread = new Thread(mythread2);
+        thread.start();
+
+
+
     }
+}
+
+class Mythread extends Thread{
+    @Override
+    public void run() {
+        System.out.println("Mythread.run");
+    }
+}
+
+class MyThread extends OtherClass implements Runnable{
+
+    @Override
+    public void run() {
+        System.out.println("MyThread.run");
+    }
+}
+
+// 其他类
+class OtherClass {
+
 }

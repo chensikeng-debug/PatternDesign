@@ -3,6 +3,7 @@ package com.ccbft;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +62,11 @@ public class Test {
 //            System.out.println(s1);
 //        }
 
-        String s = null;
+       /* String s = null;
         boolean blank = StringUtils.isBlank(s);
         System.out.println(blank);
-    }
-}
+        String defProps = "{'batchsize':100}";*/
+        
 /**
  * 第0个是：a1
  * 第1个是：a2
@@ -77,3 +78,7 @@ public class Test {
  * line Length :3
  * lineEnd Length :4
  */
+        AbstractList list = new ArrayList();
+
+    }
+}

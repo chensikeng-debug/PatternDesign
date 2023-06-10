@@ -1,0 +1,30 @@
+<assembly
+<id></id>
+<formats>
+<format>dir</format>
+</formats>
+<includeBaseDirectory>false</includeBaseDirectory>
+<fileSets>
+<fileSet>
+    <directory>target/</directory>
+    <fileMode>0755</fileMode>
+    <includes>
+        <include>focus-offline-spark*.jar</include>
+    </includes>
+    <outputDirectory>offlineJar/lib/</outputDirectory>
+</fileSet>
+<fileSet>
+    <directory>conf/</directory>
+    <fileMode>0755</fileMode>
+    <includes>
+        <include>cos.properties</include>
+        <include>cos_hadoop_config.xml</include>
+        <include>khaos-defaults.conf</include>
+        <include>log4j-spark.properties</include>
+        <include>user_config.yml</include>
+        <include>focus-extender.yml</include>
+    </includes>
+    <outputDirectory>offlineJar/conf/</outputDirectory>
+</fileSet>
+<fileSet>
+</assembly>
